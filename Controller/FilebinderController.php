@@ -30,10 +30,10 @@ class FilebinderController extends FilebinderAppController {
         $key = $this->request->query['key'];
         $expire = $this->request->query['expire'];
 
-        if ($expire < time()) {
-            throw new NotFoundException(__('Invalid access'));
-            return;
-        }
+//        if ($expire < time()) {
+//            throw new NotFoundException(__('Invalid access'));
+//            return;
+//        }
 
         $secret = $this->Session->read('Filebinder.secret');
 
