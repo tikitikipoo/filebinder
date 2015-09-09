@@ -74,9 +74,13 @@ class FilebinderController extends FilebinderAppController {
             throw new NotFoundException(__('Invalid access'));
             return;
         }
+
         if (strstr(env('HTTP_USER_AGENT'), 'MSIE')) {
             $fileName = mb_convert_encoding($fileName,  "SJIS", "UTF-8");
             header('Content-Disposition: inline; filename="'. $fileName .'"');
+        } else if (stripos(env('HTTP_USER_AGENT'),'Trident/7.0; rv:11.0') !== false ) {
+            // for IE11
+            header('Content-Disposition: attachment; filename="'. rawurlencode($fileName) .'"');
         } else {
             header('Content-Disposition: attachment; filename="'. $fileName .'"');
         }
