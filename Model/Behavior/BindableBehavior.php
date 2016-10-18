@@ -72,7 +72,7 @@ class BindableBehavior extends ModelBehavior {
      * @param $model
      * @return
      */
-    public function beforeValidate(Model $model){
+    public function beforeValidate(Model $model, $options = []){
         return true;
     }
 
@@ -124,7 +124,7 @@ class BindableBehavior extends ModelBehavior {
      * @param $model, $result
      * @return
      */
-    public function afterFind(Model $model, $result, $primary){
+    public function afterFind(Model $model, $result, $primary = false){
         return $this->bindFile($model, $result);
     }
 
@@ -134,7 +134,7 @@ class BindableBehavior extends ModelBehavior {
      * @param $model
      * @return
      */
-    public function beforeSave(Model $model) {
+    public function beforeSave(Model $model, $options = []) {
         $modelName = $model->alias;
         $model->bindedData = $model->data;
         foreach ($model->data[$modelName] as $fieldName => $value) {
@@ -202,7 +202,7 @@ class BindableBehavior extends ModelBehavior {
      * @param $created
      * @return
      */
-    public function afterSave(Model $model, $created){
+    public function afterSave(Model $model, $created, $options = []){
         $modelName = $model->alias;
 
         if ($created) {
