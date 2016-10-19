@@ -737,7 +737,7 @@ class BindableBehavior extends ModelBehavior {
         if ($fields) {
             if (is_string($fields)) {
                 App::uses('String', 'Utility');
-                $fields = String::tokenize($fields);
+                $fields = CakeText::tokenize($fields);
             }
 
             $query['conditions']['field_name'] = $fields;
