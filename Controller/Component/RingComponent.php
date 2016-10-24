@@ -145,8 +145,17 @@ class RingComponent extends Component {
             $tmpPath = empty($bindFields[$fieldName]['tmpPath']) ? CACHE : $bindFields[$fieldName]['tmpPath'];
             $tmpBindPath = $tmpPath . 'ring_' . date('YmdHis') . '_' . Security::hash($model->alias . $fieldName . $fileName . time()) . $fileName;
 
-            // move_uploaded_file
-            move_uploaded_file($tmpFile, $tmpBindPath);
+            // UnitTestを通すために修正
+            $env = env('APP_ENV');
+            switch($env) {
+                case 'test':
+                    copy($tmpFile, $tmpBindPath);
+                    break;
+                default:
+                    // move_uploaded_file
+                    move_uploaded_file($tmpFile, $tmpBindPath);
+                    break;
+            }
 
             $ring = array('model' => $model->alias,
                           'field_name' => $fieldName,
